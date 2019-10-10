@@ -6,6 +6,12 @@ public class Main {
 
     public static void main(String[] args) {
         Heuristics heuristics = new Heuristics();
+        heuristics.findOptimal(3, 5,
+                new int[]{200, 300, 300},
+                new int[]{1, 1, 1, 1, 1},
+                new int[][]{{500, 100, 300, 400, 100},
+                        {300, 200, 300, 400, 200},
+                        {200, 200, 300, 100, 300}});
         long time1 = System.nanoTime();
         int result1 =
                 heuristics.objUFLP_1(3, 5,
