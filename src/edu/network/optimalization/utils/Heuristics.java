@@ -2,7 +2,7 @@ package edu.network.optimalization.utils;
 
 public class Heuristics {
 
-    public void findOptimal(int m, int n, int[]f, int[]b, int[][]d){
+    public void findOptimal(int m, int n, int[]f, int[]b, int[][]d, int T){
         int [] y = new int[m];
         for(int i = 1; i < m; i++){
             y[i] = 0;
@@ -11,11 +11,24 @@ public class Heuristics {
         int res = objUFLP_1(m, n, y, f, b, d);;
         int current_res = 0;
         for(int i = 1; i < m; i++){
+            System.out.println("Current money: " + res);
             y[i] = 1;
             current_res = objUFLP_1(m, n, y, f, b, d);
             if(current_res > res){
-                y[i] = 0;
+                double p = Math.exp((res - current_res) / T);
+                double h = Math.random();
+                if(h > p){
+                    y[i] = 0;
+                }
+                else{
+                    res = current_res;
+                }
+
             }
+            else{
+                res = current_res;
+            }
+
         }
         System.out.println("Optimal solution:");
         for(int i = 0; i < m; i++) {
@@ -23,6 +36,42 @@ public class Heuristics {
             System.out.print((i+1) + " ");
         }
         System.out.println();
+        System.out.println("Optimal money: " + res);
+        System.out.println("////////");
+    }
+
+    public void findOptimalExchangeHeuristics(int m, int n, int[]f, int[]b, int[][]d){
+        int [] y = new int[m];
+        for(int i = 0; i < m/2; i++){
+            y[i] = 1;
+        }
+        for(int i = m/2; i < m; i++){
+            y[i] = 0;
+        }
+        int res = objUFLP_1(m, n, y, f, b, d);;
+        int current_res = 0;
+        for(int i = m/2; i < m; i++){
+            System.out.println("Current money: " + res);
+            y[i] = 1;
+            y[m-i] = 0;
+            current_res = objUFLP_1(m, n, y, f, b, d);
+            if(current_res > res){
+                y[i] = 0;
+                y[m-i] = 1;
+            }
+            else{
+                res = current_res;
+            }
+
+        }
+        System.out.println("Optimal solution:");
+        for(int i = 0; i < m; i++) {
+            if(y[i] > 0)
+                System.out.print((i+1) + " ");
+        }
+        System.out.println();
+        System.out.println("Optimal money: " + res);
+        System.out.println("////////");
     }
 
     public int objUFLP_1(int m, int n, int[]y, int[]f, int[]b, int[][]d){
