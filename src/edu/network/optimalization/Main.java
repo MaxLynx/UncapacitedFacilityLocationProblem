@@ -6,16 +6,16 @@ public class Main {
 
     public static void main(String[] args) {
         Heuristics heuristics = new Heuristics();
-
-        heuristics.findOptimalExchangeHeuristics(3, //sklady
+/*
+        heuristics.findOptimal(3, //sklady
                 5, //pocet zakaznikov
                 new int[]{200, 300, 300}, //fixne naklady
                 new int[]{1, 1, 1, 1, 1}, //poziadavky
                 new int[][]{{500, 100, 300, 400, 100},  //vzdialenosti
                         {300, 200, 300, 400, 200},
-                        {200, 200, 300, 100, 300}});
+                        {200, 200, 300, 100, 300}}, 100);
 
-            heuristics.findOptimalExchangeHeuristics(10, //sklady
+            heuristics.findOptimal(10, //sklady
                     10, //pocet zakaznikov
                     new int[]{3, 3, 3, 3, 3, 3, 3, 3, 3, 3}, //fixne naklady
                     new int[]{1, 1, 1, 2, 1, 1, 1, 1, 1, 1}, //poziadavky
@@ -28,10 +28,9 @@ public class Main {
                             {1, 1, 7, 6, 4, 2, 0, 8, 3, 5},
                             {9, 7, 9, 4, 6, 10, 8, 0, 5, 7},
                             {4, 2, 4, 9, 1, 5, 3, 5, 0, 2},
-                            {6, 4, 6, 11, 3, 6, 5, 7, 2, 0}});
-
+                            {6, 4, 6, 11, 3, 6, 5, 7, 2, 0}}, 100);
+*/
         int T = 100;
-        while(T > 1) {
             System.out.println("Warmness: " + T);
             heuristics.findOptimal(5, //sklady
                     10, //pocet zakaznikov
@@ -43,10 +42,8 @@ public class Main {
                             {40, 15, 35, 30, 20, 40, 40, 30, 25, 20},
                             {75, 20, 25, 50, 25, 55, 35, 30, 20, 30}},
                     T);
-            T /= 2;
-        }
+/*
 
-        /*
         long time1 = System.nanoTime();
         int result1 =
                 heuristics.objUFLP_1(3, 5,

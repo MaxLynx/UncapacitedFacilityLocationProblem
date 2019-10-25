@@ -1,38 +1,83 @@
 package edu.network.optimalization.utils;
 
+import java.util.Random;
+
 public class Heuristics {
 
+    private Random random;
+
     public void findOptimal(int m, int n, int[]f, int[]b, int[][]d, int T){
+        random = new Random();
         int [] y = new int[m];
         for(int i = 1; i < m; i++){
-            y[i] = 0;
+            y[i] = random.nextInt(2);
         }
-        y[0] = 1;
-        int res = objUFLP_1(m, n, y, f, b, d);;
+        int u = 5;
+        int q = 5;
+        int res = objUFLP_1(m, n, y, f, b, d);
         int current_res = 0;
-        for(int i = 1; i < m; i++){
-            System.out.println("Current money: " + res);
-            y[i] = 1;
+        int optimal_res = res;
+        int w = 0;
+        int t = T;
+        int[] optimal_y = new int[m];
+            for(int j = 0; j < m; j++){
+                optimal_y[j] = 0;
+            }
+
+        for(int r = 0; r < u; r++){
+            int randomIndex = random.nextInt(m);
+            if(y[randomIndex] == 1){
+                y[randomIndex] = 0;
+            }
+            else{
+                y[randomIndex] = 1;
+            }
+            System.out.println("Current warmness: " + t);
+            System.out.println("Current solution:");
+            for(int i = 0; i < m; i++) {
+                if(y[i] > 0)
+                    System.out.print((i+1) + " ");
+            }
             current_res = objUFLP_1(m, n, y, f, b, d);
+            System.out.println("\nCurrent money: " + current_res);
+            w++;
+            if(w == q){
+                t /= 2;
+                w = 0;
+            }
             if(current_res > res){
-                double p = Math.exp((res - current_res) / T);
+                double p = Math.exp((res - current_res) / t);
                 double h = Math.random();
                 if(h > p){
-                    y[i] = 0;
+                    if(y[randomIndex] == 1){
+                        y[randomIndex] = 1;
+                    }
+                    else{
+                        y[randomIndex] = 0;
+                    }
                 }
                 else{
                     res = current_res;
+                    r = 0;
+
                 }
 
             }
             else{
                 res = current_res;
+                r = 0;
+                    if(res < optimal_res){
+                        for(int j = 0; j < m; j++){
+                            optimal_y[j] = y[j];
+                        }
+                    }
+
             }
 
         }
         System.out.println("Optimal solution:");
         for(int i = 0; i < m; i++) {
-            if(y[i] > 0)
+            if(optimal_y[i] > 0)
             System.out.print((i+1) + " ");
         }
         System.out.println();
